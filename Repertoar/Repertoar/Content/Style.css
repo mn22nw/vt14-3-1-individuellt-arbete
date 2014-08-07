@@ -1,0 +1,134 @@
+﻿body {
+    background-color:gray;
+    margin:0 auto;
+
+}
+
+.paging {
+    margin-top:20px;
+}
+
+*:focus {
+    outline: 0;
+}
+#tableContacts {
+    width:900px;
+}
+
+#tableContacts tr{
+    width:250px;
+    padding:25px;
+    
+}
+#allContactsTable th, .HeaderTb{
+    text-align:left;
+    padding-left:15px;
+}
+.HeaderTb tr{
+    background:#000;
+    color:#FFF;
+    padding:20px 0;
+    padding-left:15px;
+    display:block;
+}
+.HeaderTb {
+    border-collapse:collapse;
+    width:100%;
+   
+}
+.firstName {
+    width:130px;
+}
+.lastName {
+    width:200px;
+}
+.emailTb {
+    width:450px;    
+}
+.zebra_stripe tbody tr:nth-child(even) td, .zebra_stripe tbody tr.even td {
+    background:#e5ecf9;
+}
+/****       NY KUND         ****
+   ------------------------****/
+.nyKund {
+    display:block;
+    padding:15px;
+    background:#e5ecf9;
+    width:100px;
+    text-decoration:none;
+    margin-bottom:20px;
+    color:#000;
+    font-weight:900;
+    text-align:center;
+    border:1px solid #000;
+    border-radius:5px;
+}
+    .nyKund:visited {
+        color:#000;
+    }
+.smaller {
+    width:70px;
+    font-size:.8em;
+}
+.right {
+    float:right;
+    background:#ff9900;
+}
+
+
+    /* Message styles
+-----------------------------------------------------------*/
+.icon-ok
+{
+    border: solid 1px #90ac13;
+    background: #eef4d3;
+    color: #6b800d;
+    font-weight: bold;
+    text-align: left;
+    vertical-align: middle;
+    min-height: 42px;
+    padding: 10px;
+    line-height: 42px;
+    vertical-align: middle;
+    margin-bottom:.5em;
+}
+.exit {
+    float:right;
+    width:70px;
+    height:30px;
+    font-size:.8em;
+    background:#000;
+    color:#FFF;
+    cursor:pointer;
+}
+
+#AllContent {
+    margin:0 auto;
+    width:900px;
+    max-width:95%;
+    border:1px solid green;
+    padding:10px;
+    
+}
+#page {
+    width: 80%;
+    margin:0 auto;
+    background:#FFF;
+    padding:15px 20px;
+    height:900px;
+}
+.validation-summary-errors {
+     font-weight: bold;
+    border: 2px solid gray;
+    padding: 20px;
+    max-width:400px;
+    max-width:100%;
+    min-height: 15px;
+    margin-top: 15px;
+    margin-bottom:15px;
+}
+.error {
+    color:red;
+}
+
+
