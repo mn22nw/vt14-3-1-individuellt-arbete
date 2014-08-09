@@ -27,10 +27,10 @@ namespace Repertoar.Pages.RepertoarPages
         {
             SuccessMessagePanel.Visible = false;
         }
-        
-        public IEnumerable<Material> ContactListView_GetData(int maximumRows, int startRowIndex, out int totalRowCount)
+
+        public IEnumerable<Material> MaterialListView_GetData()
         {
-            return Service.GetSongsPageWise(maximumRows, startRowIndex, out totalRowCount);
+            return Service.GetSongs();
 
         }
 

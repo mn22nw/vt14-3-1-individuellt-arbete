@@ -15,8 +15,8 @@ namespace Repertoar.MODEL.DAL
             // Skapar ett anslutningsobjekt.
             using (var conn = CreateConnection())
             {
-                try
-                {   // Skapar och initierar ett SqlCommand-objekt som används till att 
+               // try
+              //  {   // Skapar och initierar ett SqlCommand-objekt som används till att 
                     // exekveras specifierad lagrad procedur.
                     var cmd = new SqlCommand("Repertoar_GetKategories", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -52,12 +52,12 @@ namespace Repertoar.MODEL.DAL
 
                     // Returnerar referensen till List-objektet med referenser med ContactType-objekt.
                     return kategories;
-                }
+              /*  }
                 catch(Exception)
                 {
                     // Kastar ett eget undantag om ett undantag kastas.
                     throw new ApplicationException("Det gick inte att hämta ut kategori från databasen");
-                }
+                }*/
             }
         }
     }

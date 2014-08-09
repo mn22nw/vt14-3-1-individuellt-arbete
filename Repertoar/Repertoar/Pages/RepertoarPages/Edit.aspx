@@ -14,10 +14,7 @@
         SelectMethod="MaterialListView_GetData"
         InsertMethod="MaterialListView_InsertItem"
         UpdateMethod="MaterialListView_UpdateItem"
-        OnItemCreated="MaterialListView_ItemCreated"
-        OnItemDataBound="MaterialListView_ItemDataBound"
-        OnPreRender="MaterialListView_PreRender"
-        InsertItemPosition="LastItem">
+        OnItemDataBound="MaterialListView_ItemDataBound" >
     <EditItemTemplate>
     <asp:RadioButtonList ID="rb" runat="server"></asp:RadioButtonList>
        
@@ -46,7 +43,7 @@
                         <asp:TextBox ID="TextBox1" runat="server" Text='<%# Item.Namn %>' MaxLength="50" Enabled="false" />
                         <%-- "Kommandknappar" för att redigera och ta bort en kunduppgift . Kommandonamnen är VIKTIGA! --%>
                         <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Edit" Text="Redigera" CausesValidation="false" />
-                        <asp:HyperLink ID="HyperLink1" runat="server" Text="Ta bort" NavigateUrl='<%# GetRouteUrl("ContactDelete", new { id = Item.ContactId }) %>' />
+                        <asp:HyperLink ID="HyperLink1" runat="server" Text="Ta bort" NavigateUrl='<%# GetRouteUrl("DeleteSong", new { id = Item.MID }) %>' />
                     </li>
                 </asp:View>
     

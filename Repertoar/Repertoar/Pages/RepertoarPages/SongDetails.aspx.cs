@@ -2,8 +2,10 @@
 using Repertoar.MODEL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -26,18 +28,26 @@ namespace Repertoar.Pages.RepertoarPages
          /// <summary>
          /// Bestämmer om kontaktuppgifterna ska kunna redigeras eller inte.
          ///</summary>
-      
 
-        public Material MaterialListView_GetData()
+
+        public Material MaterialListView_GetItem([RouteData]int id)
         {
-            return Service.GetSongByID(MID);
+            try
+            {
+                return Service.GetSongByID(id);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(String.Empty,  String.Format(Strings.Song_Not_Found, id));
+                return null;
+            }
         }
-
         protected void MaterialListView_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            var label = e.Item.FindControl("ContactTypeNameLabel") as Label;
+            var label = e.Item.FindControl("KategoryNameLabel") as Label;
             if (label != null)
             {
+                Debug.WriteLine("not null eeyhoo");
                 // Typomvandlar e.Item.DataItem så att primärnyckelns värde kan hämtas och...
                 var material = (Material)e.Item.DataItem;
 
@@ -82,10 +92,7 @@ namespace Repertoar.Pages.RepertoarPages
             }
         }
     
-        public IEnumerable<Kategori> KategoryDropDownList_GetData()
-        {
-            return Service.GetKategories();
-        }
+       
 
     }
 }

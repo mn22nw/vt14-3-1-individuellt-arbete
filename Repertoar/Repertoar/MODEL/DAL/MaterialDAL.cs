@@ -69,7 +69,7 @@ namespace Repertoar.MODEL.DAL
                             return new Material
                             {
                                 MID = reader.GetInt32(MIDIndex),
-                                KaId = reader.GetInt32(KaIdIndex),
+                                KaID = reader.GetInt32(KaIdIndex),
                                 KompID = reader.GetInt32(KompIndex),
                                 Namn = reader.GetString(NameIndex),
                                 Level = reader.GetByte(LevelIndex),
@@ -124,7 +124,7 @@ namespace Repertoar.MODEL.DAL
                         {
 
                             MID = reader.GetInt32(MIDIndex),
-                            KaId = reader.GetInt32(KaIdIndex),
+                            KaID = reader.GetInt32(KaIdIndex),
                             KompID = reader.GetInt32(KompIndex),
                             Namn = reader.GetString(NameIndex),
                             Level = reader.GetByte(LevelIndex),
@@ -147,12 +147,6 @@ namespace Repertoar.MODEL.DAL
             }
         }
 
-        public IEnumerable<Material> GetSongsPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
-        {
-            totalRowCount = GetSongs().Count();
-            return GetSongs().Skip(startRowIndex).Take(maximumRows);
-        }
-
         public void InsertSong(Material material)
         {
             using (var conn = CreateConnection())
@@ -162,7 +156,7 @@ namespace Repertoar.MODEL.DAL
                     var cmd = new SqlCommand("Usp.NewSong", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@KaID", SqlDbType.Int, 4).Value = material.KaId;
+                    cmd.Parameters.Add("@KaID", SqlDbType.Int, 4).Value = material.KaID;
                     cmd.Parameters.Add("@KompID", SqlDbType.Int, 4).Value = material.KompID;
                     cmd.Parameters.Add("@Namn", SqlDbType.VarChar, 30).Value = material.Namn;
                     cmd.Parameters.Add("@Svårighetsgrad", SqlDbType.TinyInt).Value = material.Level;
@@ -194,11 +188,11 @@ namespace Repertoar.MODEL.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("Person.uspUpdateContact", conn);
+                    var cmd = new SqlCommand("Repertoar_UpdateSong", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@MID", SqlDbType.Int, 4).Value = material.MID;
-                    cmd.Parameters.Add("@KaID", SqlDbType.Int, 4).Value = material.KaId;
+                    cmd.Parameters.Add("@KaID", SqlDbType.Int, 4).Value = material.KaID;
                     cmd.Parameters.Add("@KompID", SqlDbType.Int, 4).Value = material.KompID;
                     cmd.Parameters.Add("@Namn", SqlDbType.VarChar, 30).Value = material.Namn;
                     cmd.Parameters.Add("@Svårighetsgrad", SqlDbType.TinyInt).Value = material.Level;

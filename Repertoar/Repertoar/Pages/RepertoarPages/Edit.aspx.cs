@@ -127,9 +127,9 @@ namespace Repertoar.Pages.RepertoarPages
           myinstruments.Sort();
 
           
-          rb.DataSource = myinstruments;
-          rb.DataBind();
-          rb.Items.FindByValue("Piano").Selected = true; //http://stackoverflow.com/questions/5662113/set-radiobuttonlist-selected-from-codebehind
+          //rb.DataSource = myinstruments;
+         // rb.DataBind();
+         // rb.Items.FindByValue("Piano").Selected = true; //http://stackoverflow.com/questions/5662113/set-radiobuttonlist-selected-from-codebehind
 
            /* DataSet ds = new DataSet();
            
@@ -142,13 +142,22 @@ namespace Repertoar.Pages.RepertoarPages
             rblInstrument.DataBind();*/
         }
 
-        private SqlConnection CreateConnection()
+        protected void MaterialListView_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            throw new NotImplementedException();
+            var label = e.Item.FindControl("ContactTypeNameLabel") as Label;
+            if (label != null)
+            {
+                // Typomvandlar e.Item.DataItem så att primärnyckelns värde kan hämtas och...
+                var material = (Material)e.Item.DataItem;
+
+                // ...som sedan kan användas för att hämta ett ("cachat") kategoriobjekt...
+                var Kategori = Service.GetKategories()
+                    .Single(ka => ka.KaID == material.KaID);
+
+                // ...så att en beskrivning av kategori kan presenteras; ex: Kategori:Not
+                label.Text = String.Format(label.Text, Kategori.Namn);
+            }
         }
-        protected void btnSubmit_Click(object sender, EventArgs e)
-        {
-           // lblValue.Text = rblCountry.SelectedItem.ToString();
-        }
+        
     }
 }

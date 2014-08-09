@@ -115,11 +115,11 @@ namespace Repertoar.App_GlobalResourses {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Låtnamn måste anges..
         /// </summary>
-        internal static string String2 {
+        internal static string Song_Value_Required {
             get {
-                return ResourceManager.GetString("String2", resourceCulture);
+                return ResourceManager.GetString("Song_Value_Required", resourceCulture);
             }
         }
         

@@ -1,20 +1,17 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="SongDetails.aspx.cs" Inherits="Repertoar.Pages.RepertoarPages.SongDetails" %>
+﻿<%@ Page Title="Detaljer" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="SongDetails.aspx.cs" Inherits="Repertoar.Pages.RepertoarPages.SongDetails" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 
-      <%-- ListView som presenterar detaljer för en låt. --%>
+    <%-- ListView som presenterar detaljer för en låt. --%>
     <asp:ListView ID="MateriaListView" runat="server"
         ItemType="Repertoar.MODEL.Material"
         DataKeyNames="MID, KaID, KompID"
-        SelectMethod="MaterialListView_GetData"
-        OnItemCreated="MaterialListView_ItemCreated"
-        OnItemDataBound="MaterialListView_ItemDataBound"
-        OnPreRender="MaterialListView_PreRender"
-        InsertItemPosition="LastItem">
+        SelectMethod="MaterialListView_GetItem"
+        OnItemDataBound="MaterialListView_ItemDataBound">
         <LayoutTemplate>
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" HeaderText="Följande fel inträffade:"
                 CssClass="validation-summary-errors" ShowModelStateErrors="False" />
-            <asp:ValidationSummary ID="ValidationSummary2" runat="server" HeaderText="<%$ Resources:Strings, Validation_Header %>"
+            <asp:ValidationSummary ID="ValidationSummary2" runat="server" HeaderText="Följande fel inträffade"
                 CssClass="validation-summary-errors" ValidationGroup="vgContactInsert" ShowModelStateErrors="False" />
             <ul>
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -25,33 +22,50 @@
                 Uppgifter saknas.
             </p>
         </EmptyDataTemplate>
-        <ItemTemplate>
-            <asp:MultiView ID="ContactMultiView" runat="server" ActiveViewIndex="0">
-                <asp:View ID="ReadOnlyView" runat="server">
-                    <%-- ListView som presenterar en kunds kontaktuppgifter. --%>
-                    <li>
-                        <%-- Label-kontrollen uppgift är att visa vilken typ kontaktinformationen är av. --%>
-                        <asp:Label ID="ContactTypeNameLabel" runat="server" Text="{0}: " /><span><%#: Item.Namn %></span>
-                    </li>
-                </asp:View>
-                
-            </asp:MultiView>
-        </ItemTemplate>
-        <InsertItemTemplate>
-            <li>
-                <asp:DropDownList ID="ContactTypeDropDownList" runat="server"
-                    ItemType="GeekCustomer.Model.ContactType"
-                    SelectMethod="ContactTypeDropDownList_GetData"
-                    DataTextField="Name"
-                    DataValueField="ContactTypeId"
-                    SelectedValue='<%# BindItem.KaID %>' />
-                <asp:TextBox ID="ValueTextBox" runat="server" Text='<%# BindItem.Namn %>' MaxLength="50" ValidationGroup="vgContactInsert" />
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="<%$ Resources:Strings, Contact_Value_Required %>"
-                    ControlToValidate="ValueTextBox" CssClass="field-validation-error" ValidationGroup="vgContactInsert"
-                    Display="Dynamic">*</asp:RequiredFieldValidator>
 
-            </li>
-        </InsertItemTemplate>
+        <ItemTemplate>
+                 <%-- Mall för nya rader --%>
+                        <h1>
+                            <asp:Label ID="NamnLabel" runat="server" Text="<%# Item.Namn %>" />
+                        </h1>
+            <div id="anteckningar">
+                <h3>Anteckningar</h3>
+                <p> <%# Item.Anteckning %></p>
+            </div>
+            <div id="details">
+                <ul id="detailsUL">
+                         <li>
+                             <h3>Instrument:</h3>
+                            <asp:Label ID="InstrumentLabel" runat="server" Text="<%# Item.Instrument %> " />
+                        </li> 
+                        <li>
+                            <h3>Status:</h3>
+                            <asp:Label ID="StatusLabel" runat="server" Text="<%# Item.Status %> " />
+                        </li>
+                        <li>
+                            <h3>Genre:</h3>
+                            <asp:Label ID="GenreLabel" runat="server" Text="<%# Item.Genre %> " />
+                        </li>
+
+                        <li>
+                            <h3>Kategori:</h3>
+                            <asp:Label ID="KategoryNameLabel" runat="server" Text="{0}" /></span>
+                        </li> 
+            </ul>
+                <p>Här ska kompositör finnas...</p>
+               </div>
+            
+             <asp:HyperLink ID="HyperLink1" runat="server" Text="Redigera" 
+                            NavigateUrl='<%# GetRouteUrl("EditSong", new { id= Item.MID}) %>' CssClass="nyKund smaller" />
+                       
+             <asp:LinkButton ID="LinkButton1"  runat="server" CommandName="Delete" Text="Radera"  CssClass="nyKund smaller"
+                             OnClientClick='<%# String.Format("return confirm(\"Ta bort kontakten {0}?\")", Item.Namn) %>'/>  
+            <hr />   
+             <asp:HyperLink ID="HyperLink2" runat="server" Text="Tillbaka" 
+                           NavigateUrl="<%$ RouteUrl:routename=Default %>" CssClass="nyKund smaller" />
+
+             </ItemTemplate>        
+           
     </asp:ListView>
 
 

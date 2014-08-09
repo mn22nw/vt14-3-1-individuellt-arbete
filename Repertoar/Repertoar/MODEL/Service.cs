@@ -20,19 +20,19 @@ namespace Repertoar.MODEL
 
         #region Egenskaper
 
-        private MaterialDAL ContactDAL
+        private MaterialDAL MaterialDAL
         {
             // Ett materialDAL-objekt skapas först då det behövs för första 
             // gången (lazy initialization, http://en.wikipedia.org/wiki/Lazy_initialization).
             get { return _materialDAL ?? (_materialDAL = new MaterialDAL()); }
         }
 
-        private KategoriDAL ContactTypeDAL
+        private KategoriDAL KategoriDAL
         {
             get { return _kategoriDAL ?? (_kategoriDAL = new KategoriDAL()); }
         }
 
-        private ComposerDAL CustomerDAL
+        private ComposerDAL ComposerDAL
         {
             get { return _composerDAL ?? (_composerDAL = new ComposerDAL()); }
         }
@@ -58,11 +58,6 @@ namespace Repertoar.MODEL
         {
             return MaterialDAL.GetSongs();
 
-        }
-
-        public IEnumerable<Material> GetSongsPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
-        {
-            return MaterialDAL.GetSongsPageWise(maximumRows, startRowIndex, out totalRowCount);
         }
 
         #region Kategory (C)R(UD)-metoder

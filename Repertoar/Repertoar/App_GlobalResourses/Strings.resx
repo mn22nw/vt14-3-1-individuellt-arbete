@@ -135,8 +135,8 @@
   <data name="Song_Updating_Error" xml:space="preserve">
     <value>Ett fel inträffade då låten skulle uppdateras.</value>
   </data>
-  <data name="String2" xml:space="preserve">
-    <value />
+  <data name="Song_Value_Required" xml:space="preserve">
+    <value>Låtnamn måste anges.</value>
   </data>
   <data name="Validation_Header" xml:space="preserve">
     <value>Fel inträffade. Korrigera det som är fel och försök igen.</value>
