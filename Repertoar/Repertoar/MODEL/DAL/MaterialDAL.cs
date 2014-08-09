@@ -44,7 +44,7 @@ namespace Repertoar.MODEL.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("appSchema_GetSong", conn);
+                    var cmd = new SqlCommand("Repertoar_GetSong", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@MID", SqlDbType.Int, 4).Value = MID;
@@ -54,7 +54,7 @@ namespace Repertoar.MODEL.DAL
                     using (var reader = cmd.ExecuteReader())
                     {
                         var MIDIndex = reader.GetOrdinal("MID"); // ger tillbaka ett heltal där ContactId finns
-                        var KaIdIndex = reader.GetOrdinal("KaId");
+                        var KaIdIndex = reader.GetOrdinal("KaID");
                         var KompIndex = reader.GetOrdinal("KompID");
                         var NameIndex = reader.GetOrdinal("Namn");
                         var LevelIndex = reader.GetOrdinal("Svårighetsgrad");
@@ -72,7 +72,7 @@ namespace Repertoar.MODEL.DAL
                                 KaId = reader.GetInt32(KaIdIndex),
                                 KompID = reader.GetInt32(KompIndex),
                                 Namn = reader.GetString(NameIndex),
-                                Level = reader.GetInt32(LevelIndex),
+                                Level = reader.GetByte(LevelIndex),
                                 Genre = reader.GetString(GenreIndex),
                                 Status = reader.GetString(StatusIndex),
                                 Instrument = reader.GetString(InstrumentIndex),
@@ -85,9 +85,9 @@ namespace Repertoar.MODEL.DAL
                     return null;
                 }
 
-                catch
+                catch (Exception )
                 {
-                    throw new ApplicationException("Det gick inte att hämta ut låten  från databasen");
+                    throw new ApplicationException( "Det gick inte att hämta ut låten från databasen");
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace Repertoar.MODEL.DAL
                 using (var reader = cmd.ExecuteReader())
                 {
                     var MIDIndex = reader.GetOrdinal("MID"); // ger tillbaka ett heltal där MID finns
-                    var KaIdIndex = reader.GetOrdinal("KaId");
+                    var KaIdIndex = reader.GetOrdinal("KaID");
                     var KompIndex = reader.GetOrdinal("KompID");
                     var NameIndex = reader.GetOrdinal("Namn");
                     var LevelIndex = reader.GetOrdinal("Svårighetsgrad");

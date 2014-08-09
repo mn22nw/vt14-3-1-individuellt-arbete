@@ -14,6 +14,7 @@ namespace Repertoar.App_Start
             routes.MapPageRoute("SongListing", "Songs/list", "~/Pages/RepertoarPages/Listing.aspx");
             routes.MapPageRoute("EditSong", "Song/{id}/redigera", "~/Pages/RepertoarPages/Edit.aspx");
             routes.MapPageRoute("DeleteSong", "Song/{id}/radera", "~/Pages/RepertoarPages/Delete.aspx");
+            routes.MapPageRoute("Details", "Song/{id}/Detaljer", "~/Pages/RepertoarPages/SongDetails.aspx");
 
             routes.MapPageRoute("Error", "serverfel", "~/Pages/Shared/Error.aspx");
             routes.MapPageRoute("Default", "", "~/Pages/RepertoarPages/Listing.aspx");

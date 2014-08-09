@@ -12,7 +12,7 @@
                  CssClass="validation-summary-errors"/>
      </asp:Panel>
 
-     <asp:ListView ID="ContactListView" runat="server" AllowPaging="True"
+     <asp:ListView ID="ContactListView" runat="server" 
             ItemType="Repertoar.MODEL.Material"
             SelectMethod="ContactListView_GetData"
             DeleteMethod="ContactListView_DeleteSong"
@@ -37,19 +37,7 @@
                 <%-- Platshallare för nya rader --%>
                     <asp:PlaceHolder ID="itemPlaceholder" runat="server" />
                 </table>
-                <div class="paging">
-                <asp:DataPager ID="DataPager1" runat="server" PageSize="5">
-                    <Fields>
-                        <asp:NextPreviousPagerField ShowFirstPageButton="true" FirstPageText="Första "
-                            ShowNextPageButton="false" ShowPreviousPageButton="false" />
-                        
-                        <asp:NumericPagerField />
-                       
-                        <asp:NextPreviousPagerField ShowFirstPageButton="false" LastPageText="Sista"
-                            ShowNextPageButton="false" ShowPreviousPageButton="false" ShowLastPageButton="true"/>
-                    </Fields>
-                </asp:DataPager>
-                </div>
+                
 
             </LayoutTemplate>
             <ItemTemplate>
@@ -60,7 +48,7 @@
                             <asp:Label ID="NamnLabel" runat="server" Text="<%# Item.Namn %>" />
                         </th>
                         <th class="lastName">
-                            <asp:Label ID="KategoryLabel" runat="server" Text="<%# Item.KaId %>" />
+                            <asp:Label ID="KategoryLabel" runat="server" Text="<%# Item.KaID %>" />
                         </th>
                         <th class="emailTb">
                             <asp:Label ID="GenreLabel" runat="server" Text="<%# Item.Genre %> " />

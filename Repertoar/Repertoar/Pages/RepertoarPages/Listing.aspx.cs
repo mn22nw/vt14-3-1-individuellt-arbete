@@ -27,14 +27,7 @@ namespace Repertoar.Pages.RepertoarPages
         {
             SuccessMessagePanel.Visible = false;
         }
-
-        // The return type can be changed to IEnumerable, however to support
-        // paging and sorting, the following parameters must be added:
-        //     int maximumRows
-        //     int startRowIndex
-        //     out int totalRowCount
-        //     string sortByExpression
-
+        
         public IEnumerable<Material> ContactListView_GetData(int maximumRows, int startRowIndex, out int totalRowCount)
         {
             return Service.GetSongsPageWise(maximumRows, startRowIndex, out totalRowCount);

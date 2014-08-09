@@ -10,13 +10,35 @@ namespace Repertoar.MODEL
 {
     public class Service  // kommunicerar med dataatkomstlagret som man kan instansiera i presentationslagret
     {
-        private MaterialDAL _materialDAL;
+        #region Fält
 
-        private MaterialDAL MaterialDAL
+        private MaterialDAL _materialDAL;
+        private KategoriDAL _kategoriDAL;
+        private ComposerDAL _composerDAL;
+
+        #endregion
+
+        #region Egenskaper
+
+        private MaterialDAL ContactDAL
         {
+            // Ett materialDAL-objekt skapas först då det behövs för första 
+            // gången (lazy initialization, http://en.wikipedia.org/wiki/Lazy_initialization).
             get { return _materialDAL ?? (_materialDAL = new MaterialDAL()); }
         }
 
+        private KategoriDAL ContactTypeDAL
+        {
+            get { return _kategoriDAL ?? (_kategoriDAL = new KategoriDAL()); }
+        }
+
+        private ComposerDAL CustomerDAL
+        {
+            get { return _composerDAL ?? (_composerDAL = new ComposerDAL()); }
+        }
+
+        #endregion
+       
         public void DeleteContact(Material material)
         {
             //kod
@@ -27,7 +49,7 @@ namespace Repertoar.MODEL
             MaterialDAL.DeleteSong(MID);
         }
 
-        public Material GetSong(int MID)
+        public Material GetSongByID(int MID)
         {
             return MaterialDAL.GetSongById(MID);
         }
@@ -43,6 +65,33 @@ namespace Repertoar.MODEL
             return MaterialDAL.GetSongsPageWise(maximumRows, startRowIndex, out totalRowCount);
         }
 
+        #region Kategory (C)R(UD)-metoder
+
+        /// <summary>
+        /// Hämtar alla kontakttyper.
+        /// </summary>
+        /// <returns>Ett List-objekt innehållande referenser till ContactType-objekt.</returns>
+        public IEnumerable<Kategori> GetKategories(bool refresh = false)
+        {
+            // Försöker hämta lista med kontakttyper från cachen.
+            var kategories = HttpContext.Current.Cache["Kategory"] as IEnumerable<Kategori>;
+
+            // Om det inte finns det en lista med kontakttyper...
+            if (kategories == null || refresh)
+            {
+                // ...hämtar då lista med kontakttyper...
+                kategories = KategoriDAL.GetKategories();
+
+                // ...och cachar dessa. List-objektet, inklusive alla ContactType-objekt, kommer att cachas 
+                // under 10 minuter, varefter de automatiskt avallokeras från webbserverns primärminne.
+                HttpContext.Current.Cache.Insert("ContactTypes", kategories, null, DateTime.Now.AddMinutes(10), TimeSpan.Zero);
+            }
+
+            // Returnerar listan med kontakttyper.
+            return kategories;
+        }
+
+        #endregion
 
         public void SaveSong(Material material)
         {

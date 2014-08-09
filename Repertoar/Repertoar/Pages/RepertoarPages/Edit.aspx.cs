@@ -1,8 +1,10 @@
-﻿using Repertoar.MODEL;
+﻿using Repertoar.App_GlobalResourses;
+using Repertoar.MODEL;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.ModelBinding;
@@ -12,15 +14,19 @@ using System.Web.UI.WebControls;
 namespace Repertoar.Pages.RepertoarPages
 {
     public partial class Edit : System.Web.UI.Page
-    {
+    {   
+        #region Service instance object
         private Service _service;
-        string Instrument;
+        
 
         private Service Service
         {
             get { return _service ?? (_service = new Service()); }
         }
-
+        #endregion
+        
+        string Instrument;
+        public int MID { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["SuccessUpdate"] as bool? == true)
@@ -37,26 +43,27 @@ namespace Repertoar.Pages.RepertoarPages
 
         }
 
-        public Material ContactFormView_GetSong([RouteData]int id)
+        public Material MaterialListView_GetSong([RouteData]int id)
         {
             try
             {
-                return Service.GetSong(id);
-            }
+              //  Debug.WriteLine(id + "ihi");
+                return Service.GetSongByID(id);
+           }
             catch (Exception)
             {
-                ModelState.AddModelError(String.Empty, "Fel inträffade då låten hämtades vid redigering.");
+                ModelState.AddModelError(String.Empty, Strings.Song_Selecting_Error);
                 return null;
             }
         }
 
-        public void ContactFormView_UpdateSong(int MID)
+        public void MaterialListView_UpdateSong(int MID)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var material = Service.GetSong(MID);
+                    var material = Service.GetSongByID(MID);
                     if (material == null)
                     {
                         // Hittade inte kunden.
@@ -69,17 +76,46 @@ namespace Repertoar.Pages.RepertoarPages
                     {
                         Service.SaveSong(material);
 
-                        Page.SetTempData("SuccessMessage", "Låten uppdaterades.");
+                        Page.SetTempData("SuccessMessage", Strings.Action_Song_Updated);
                         Response.RedirectToRoute("SongListing");
                         Context.ApplicationInstance.CompleteRequest();
                     }
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError(String.Empty, "Fel inträffade då låten skulle uppdateras.");
+                    ModelState.AddModelError(String.Empty, Strings.Song_Updating_Error);
                 }
             }
         }
+
+        public void MaterialListView_InsertItem(Material material)
+        {
+            if (Page.ModelState.IsValid)
+            {
+                try
+                {
+                    material.MID = MID;
+                    Service.SaveSong(material);
+
+                    // Spara (rätt)meddelande och dirigera om klienten till lista med låtar.
+                    // (Meddelandet sparas i en "temporär" sessionsvariabel som kapslas 
+                    // in av en "extension method" i App_Infrastructure/PageExtensions.)
+                    // Del av designmönstret Post-Redirect-Get (PRG, http://en.wikipedia.org/wiki/Post/Redirect/Get).
+                    Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
+                    Response.RedirectToRoute("SongDetails", new { id = MID });
+                    Context.ApplicationInstance.CompleteRequest();
+                }
+                catch (Exception)
+                {
+                    Page.ModelState.AddModelError(String.Empty, Strings.Song_Inserting_Error);
+                }
+            }
+        }
+
+
+
+
+
 
         private void BindList()
         {   

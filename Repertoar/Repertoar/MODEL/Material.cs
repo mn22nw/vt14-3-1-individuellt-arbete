@@ -11,7 +11,7 @@ namespace Repertoar.MODEL
         public int MID { get; set; }
 
         [Required(ErrorMessage = "En kategori måste anges")]
-        public int KaId { get; set; }
+        public int KaID { get; set; }
 
         public int KompID { get; set; } //NULLABLE
 
