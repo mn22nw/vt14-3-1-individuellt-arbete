@@ -63,31 +63,52 @@ namespace Repertoar.MODEL
         #region Kategory (C)R(UD)-metoder
 
         /// <summary>
-        /// Hämtar alla kontakttyper.
+        /// Hämtar alla kategorier.
         /// </summary>
-        /// <returns>Ett List-objekt innehållande referenser till ContactType-objekt.</returns>
+        /// <returns>Ett List-objekt innehållande referenser till Kategori-objekt.</returns>
         public IEnumerable<Kategori> GetKategories(bool refresh = false)
         {
-            // Försöker hämta lista med kontakttyper från cachen.
+            // Försöker hämta lista med kategorier från cachen.
             var kategories = HttpContext.Current.Cache["Kategory"] as IEnumerable<Kategori>;
 
-            // Om det inte finns det en lista med kontakttyper...
+            // Om det inte finns det en lista med kategorier...
             if (kategories == null || refresh)
             {
                 // ...hämtar då lista med kontakttyper...
                 kategories = KategoriDAL.GetKategories();
 
-                // ...och cachar dessa. List-objektet, inklusive alla ContactType-objekt, kommer att cachas 
+                // ...och cachar dessa. List-objektet, inklusive alla kategori-objekt, kommer att cachas 
                 // under 10 minuter, varefter de automatiskt avallokeras från webbserverns primärminne.
-                HttpContext.Current.Cache.Insert("ContactTypes", kategories, null, DateTime.Now.AddMinutes(10), TimeSpan.Zero);
+                HttpContext.Current.Cache.Insert("Kategory", kategories, null, DateTime.Now.AddMinutes(10), TimeSpan.Zero);
             }
 
-            // Returnerar listan med kontakttyper.
+            // Returnerar listan med kategorier.
             return kategories;
         }
 
         #endregion
+        #region Kompositör (C)R(UD)-metoder
 
+        public IEnumerable<Kompositör> GetComposers(bool refresh = false)
+        {
+            var composers = HttpContext.Current.Cache["Composer"] as IEnumerable<Kompositör>;
+
+            // Om det inte finns det en lista med kategorier...
+            if (composers == null || refresh)
+            {
+                // ...hämtar då lista med kontakttyper...
+                composers = ComposerDAL.GetComposers();
+
+                // ...och cachar dessa. List-objektet, inklusive alla kategori-objekt, kommer att cachas 
+                // under 10 minuter, varefter de automatiskt avallokeras från webbserverns primärminne.
+                HttpContext.Current.Cache.Insert("Composer", composers, null, DateTime.Now.AddMinutes(10), TimeSpan.Zero);
+            }
+
+            // Returnerar listan med kategorier.
+            return composers;
+        }
+
+        #endregion
         public void SaveSong(Material material)
         {
             ICollection<ValidationResult> validationResults;

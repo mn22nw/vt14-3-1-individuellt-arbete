@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action_Song_Deleted" xml:space="preserve">
+    <value>Låten togs bort.</value>
+  </data>
   <data name="Action_Song_Saved" xml:space="preserve">
     <value>Låten sparades.</value>
   </data>
   <data name="Action_Song_Updated" xml:space="preserve">
     <value>Låten uppdaterades.</value>
+  </data>
+  <data name="Song_Deleting_Error" xml:space="preserve">
+    <value>Ett oväntat fel inträffade när låten skulle tas bort.</value>
   </data>
   <data name="Song_Inserting_Error" xml:space="preserve">
     <value>Ett fel inträffade då låten skulle läggas till.</value>

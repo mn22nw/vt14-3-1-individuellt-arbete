@@ -47,7 +47,6 @@ namespace Repertoar.Pages.RepertoarPages
             var label = e.Item.FindControl("KategoryNameLabel") as Label;
             if (label != null)
             {
-                Debug.WriteLine("not null eeyhoo");
                 // Typomvandlar e.Item.DataItem så att primärnyckelns värde kan hämtas och...
                 var material = (Material)e.Item.DataItem;
 
@@ -57,6 +56,20 @@ namespace Repertoar.Pages.RepertoarPages
 
                 // ...så att en beskrivning av kategori kan presenteras; ex: Kategori:Not
                 label.Text = String.Format(label.Text, Kategori.Namn);
+            }
+
+            var label2 = e.Item.FindControl("ComposerNameLabel") as Label;
+            if (label2 != null)
+            {
+                // Typomvandlar e.Item.DataItem så att primärnyckelns värde kan hämtas och...
+                var material2 = (Material)e.Item.DataItem;
+
+                // ...som sedan kan användas för att hämta ett ("cachat") kategoriobjekt...
+                var Composer = Service.GetComposers()
+                    .Single(co => co.KompID == material2.KompID);
+
+                // ...så att en beskrivning av kategori kan presenteras; ex: Kategori:Not
+                label2.Text = String.Format(label2.Text, Composer.Namn);
             }
         }
 
@@ -91,6 +104,23 @@ namespace Repertoar.Pages.RepertoarPages
                 Page.ModelState.AddModelError(String.Empty, Strings.Song_Updating_Error);
             }
         }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void ContactListView_DeleteItem(int MID)
+        {
+            try
+            {
+                Service.DeleteSong(MID);
+                Page.SetTempData("SuccessMessage", Strings.Action_Song_Deleted);
+                Response.RedirectToRoute("Default");
+                Context.ApplicationInstance.CompleteRequest();
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(String.Empty, Strings.Song_Deleting_Error);
+            }
+        }
+
     
        
 

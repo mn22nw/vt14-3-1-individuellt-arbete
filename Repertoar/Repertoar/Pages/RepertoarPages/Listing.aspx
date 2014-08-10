@@ -37,12 +37,13 @@
                             <asp:Label ID="InstrumentLabel" runat="server" Text="<%# Item.Instrument %> " />
                         </th>
                         <th class="firstName">
-                            <asp:Label ID="NamnLabel" runat="server" Text="<%# Item.Namn %>" />
+                            <asp:HyperLink ID="NamnLabel" runat="server"  Text="<%# Item.Namn %>" 
+                            NavigateUrl='<%# GetRouteUrl("Details", new { id= Item.MID}) %>' CssClass="song" />
                         </th>
                         
                          <th> 
                             <asp:HyperLink ID="HyperLink2" runat="server" Text="Visa" 
-                                NavigateUrl='<%# GetRouteUrl("Details", new { id= Item.MID}) %>' CssClass="nyKund smaller" />
+                                NavigateUrl='<%# GetRouteUrl("Details", new { id= Item.MID}) %>' CssClass="button smaller" />
                         </th>
                         <hr />
                         </table>

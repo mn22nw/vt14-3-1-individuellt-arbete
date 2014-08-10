@@ -61,6 +61,15 @@ namespace Repertoar.App_GlobalResourses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Låten togs bort..
+        /// </summary>
+        internal static string Action_Song_Deleted {
+            get {
+                return ResourceManager.GetString("Action_Song_Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Låten sparades..
         /// </summary>
         internal static string Action_Song_Saved {
@@ -75,6 +84,15 @@ namespace Repertoar.App_GlobalResourses {
         internal static string Action_Song_Updated {
             get {
                 return ResourceManager.GetString("Action_Song_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ett oväntat fel inträffade när låten skulle tas bort..
+        /// </summary>
+        internal static string Song_Deleting_Error {
+            get {
+                return ResourceManager.GetString("Song_Deleting_Error", resourceCulture);
             }
         }
         
