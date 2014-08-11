@@ -1,24 +1,17 @@
-﻿<%@ Page Title="Create" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Create.aspx.cs" Inherits="Repertoar.Pages.RepertoarPages.Create" %>
+﻿<%@ Page Title="Create" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Create.aspx.cs" Inherits="Repertoar.Pages.RepertoarPages.Create" ViewStateMode="Enabled" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
      <h3>Lägg till ny låt</h3>
-      <asp:FormView ID="FormView1" runat="server" 
-            ItemType="Repertoar.MODEL.Material"
-            InsertMethod="MaterialListView_InsertItem"
-            DefaultMode="Insert"
-            RenderOuterTable="false" >
-         <InsertItemTemplate>
+    
             <div class="editor-label">
                 <label for="Name">Namn</label>
             </div>
             <div class="editor-field">
-                <asp:TextBox ID="Name" runat="server" MaxLength="50" Text="<%# BindItem.Namn %>"></asp:TextBox>
+                <asp:TextBox ID="Name" runat="server" MaxLength="50" Text=""></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
                     ErrorMessage="Ett förnamn måste anges." ControlToValidate="Name" Display="Dynamic"></asp:RequiredFieldValidator>
             </div>
              <br />
-            </InsertItemTemplate>
-        </asp:FormView>
      
         <div class="editor-label">
                 <label for="ddlComposers">Kompositör</label>
@@ -49,7 +42,7 @@
             <label for="rblKategori">Kategori</label>
       </div>
     
-      <asp:radiobuttonlist ID="rblKategori" runat="server"></asp:radiobuttonlist>
+      <asp:radiobuttonlist ID="rblKategori" runat="server" EnableViewState="false" AutoPostBack = "true"></asp:radiobuttonlist>
         <br />
         <div class="editor-label">
            <label for="rblStatus">Status</label>
@@ -91,7 +84,8 @@
                   </asp:DropDownList>  
         <br />
         <br />
-        <asp:Button ID="SaveButton" runat="server" Text="Lägg till" CommandName="Insert" CssClass="button"/>
+    
+        <asp:Button ID="SaveButton" runat="server" Text="Lägg till" OnClick="MaterialListView_InsertItem" CssClass="button"/>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
 </asp:Content>

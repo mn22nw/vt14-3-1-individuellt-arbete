@@ -43,22 +43,23 @@ namespace Repertoar.MODEL
         #region Material CRUD-metoder
         public void SaveSong(Material material, string KompNamn)
         {
-            ICollection<ValidationResult> validationResults;
+            /*  ICollection<ValidationResult> validationResults;
 
-
+             //TODO find solution for datetime validaion + Try catch
             if (!material.Validate(out validationResults))
-            {
-                Debug.WriteLine("iiig");
-                var ex = new ValidationException("Objektet klarade inte valideringen.");
-                ex.Data.Add("ValidationResults", validationResults);
-                Debug.WriteLine(ex.Message);
-                throw ex;
-            }
+             {
+                 Debug.WriteLine("iiig");
+                 var ex = new ValidationException("Objektet klarade inte valideringen.");
+                 ex.Data.Add("ValidationResults", validationResults);
+                 Debug.WriteLine(ex.Message);
+                 throw ex;
+             }
 
             try
-            {
+            {*/
                 if (material.MID == 0) // Ny post om MID är 0!
                 {
+                    Debug.WriteLine("kommerhiti??!! sevice");
                     MaterialDAL.InsertSong(material, KompNamn);
                 }
                 else
@@ -66,11 +67,11 @@ namespace Repertoar.MODEL
                     MaterialDAL.UpdateSong(material);
                 }
 
-               }
+             /*  }
             catch 
             {
                 throw new ApplicationException(Strings.Song_Inserting_Error_IU);
-            }
+            }*/
         }
         public void DeleteSong(int MID)
         {

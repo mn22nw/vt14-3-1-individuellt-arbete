@@ -74,7 +74,7 @@ namespace Repertoar.Pages.RepertoarPages
 
                     if (TryUpdateModel(material))
                     {
-                        Service.SaveSong(material, "TODO");
+                       // Service.SaveSong(material, "TODO");
 
                         Page.SetTempData("SuccessMessage", Strings.Action_Song_Updated);
                         Response.RedirectToRoute("SongListing");
@@ -93,10 +93,10 @@ namespace Repertoar.Pages.RepertoarPages
             if (Page.ModelState.IsValid)
             {
                 try
-                {
+                {   //TODO
                     material.MID = MID;
-                    Service.SaveSong(material, "TODO");
 
+                    // Service.SaveSong(material, "todo", "gojo");
                     // Spara (rätt)meddelande och dirigera om klienten till lista med låtar.
                     // (Meddelandet sparas i en "temporär" sessionsvariabel som kapslas 
                     // in av en "extension method" i App_Infrastructure/PageExtensions.)

@@ -26,10 +26,11 @@ namespace Repertoar.Pages.RepertoarPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
+            
+           // if (!IsPostBack)
+            //{
                 BindList();
-            }
+            //}
         
         }
         #region Bindlist för Radiobuttonlists och DropDownLists
@@ -38,8 +39,10 @@ namespace Repertoar.Pages.RepertoarPages
             rblKategori.DataSource = Service.GetKategories();
             rblKategori.DataTextField = "Namn";
             rblKategori.DataValueField = "KaID";
+           // rblKategori.AppendDataBoundItems = true;
             rblKategori.DataBind();
-
+            
+            rblKategori.SelectedIndex = 0;
             if (rblKategori.SelectedIndex == -1) // -1 är om inget är valt
             {
                 rblKategori.SelectedIndex = 0; 
@@ -101,35 +104,46 @@ namespace Repertoar.Pages.RepertoarPages
          }*/
         #endregion
 
-        public void MaterialListView_InsertItem(Material material)
-         {
+        public void MaterialListView_InsertItem(object sender, EventArgs e)
+        { 
              if (Page.ModelState.IsValid)
-             {
-                 try
-                 {  // Anger värden från listorna
-                     string kaID = rblKategori.SelectedItem.Value;
+             {  
+                 Material material = new Material();
+                
+                 
+               //  try
+               //  {  // Anger värden från listorna
+                     string Namn = Name.Text;
+                     string kaID = rblKategori.SelectedValue;
+                     Debug.WriteLine(kaID +"KaID");
                      string Status= rblStatus.SelectedItem.Value;
+                     Debug.WriteLine(Status);
                      string Genre = ddlGenre.SelectedItem.Value;
-                     string KompNamn = ddlComposers.SelectedItem.Value;;
+                     Debug.WriteLine(Genre);
+                     string KompNamn = ddlComposers.SelectedItem.Value;
+                     Debug.WriteLine(KompNamn);
                      int Level = Convert.ToInt32(ddlLevel.SelectedItem.Value);
+                     Debug.WriteLine(Level);
                      string Instrument = ddlInstruments.SelectedItem.Value; ;
-
-                     material.MID = MID;
+                    
+                     material.MID = 0;
                      material.KaID = Convert.ToInt32(kaID);
                      material.Status = Status;
+                     material.Namn = Namn;
                      material.Genre = Genre;
                      material.Level = Level;
-
+                     material.Instrument = Instrument;
+                     
                      Service.SaveSong(material, KompNamn);
-
+                     Debug.WriteLine("intehiti!");
                      Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
-                     Response.RedirectToRoute("Details", new { id = MID });
+                     Response.RedirectToRoute("Default");
                      Context.ApplicationInstance.CompleteRequest();
-                 }
+                /* }
                  catch (Exception)
                  {
                      Page.ModelState.AddModelError(String.Empty, Strings.Song_Inserting_Error);
-                 }
+                 }*/
              }
          }
 

@@ -83,7 +83,7 @@ namespace Repertoar.Pages.RepertoarPages
 
                 if (TryUpdateModel(material))
                 {  //TODO kolla om de behövs
-                    Service.SaveSong(material, "TODO");
+                 //   Service.SaveSong(material, "TODO");
 
                     Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
                     Response.RedirectToRoute("SongDetails", new { id = material.MID });
