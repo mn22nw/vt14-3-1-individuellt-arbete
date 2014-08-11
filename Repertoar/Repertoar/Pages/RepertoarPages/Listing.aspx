@@ -7,10 +7,9 @@
 
     <asp:Panel runat="server" ID="SuccessMessagePanel" Visible="false" CssClass="icon-ok">
                 <asp:Literal runat="server" ID="SuccessMessageLiteral" />
-
-        <asp:ValidationSummary ID="ValidationSummary1" runat="server" HeaderText="Följande fel inträffade:" 
-                 CssClass="validation-summary-errors"/>
-     </asp:Panel>
+            <asp:Button ID="Button1" CssClass="exit" runat="server" Text="Stäng" OnClientClick="exitbutton_OnClick" />
+            </asp:Panel>
+        <asp:HyperLink ID="HyperLink1"  runat="server" Text="Ny Kund" NavigateUrl="<%$ RouteUrl:routename=CreateSong %>" CssClass="nyKund right" />
 
      <asp:ListView ID="ContactListView" runat="server" 
             ItemType="Repertoar.MODEL.Material"
@@ -36,7 +35,7 @@
                          <th id="instrument">
                             <asp:Label ID="InstrumentLabel" runat="server" Text="<%# Item.Instrument %> " />
                         </th>
-                        <th class="firstName">
+                        <th class="Name">
                             <asp:HyperLink ID="NamnLabel" runat="server"  Text="<%# Item.Namn %>" 
                             NavigateUrl='<%# GetRouteUrl("Details", new { id= Item.MID}) %>' CssClass="song" />
                         </th>

@@ -1,8 +1,12 @@
-﻿using Repertoar.MODEL;
+﻿using Repertoar.App_GlobalResourses;
+using Repertoar.MODEL;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -18,13 +22,117 @@ namespace Repertoar.Pages.RepertoarPages
         }
         #endregion
 
-        protected void Page_Load(object sender, EventArgs e)
-        {}
+        public int MID { get; set; }
 
-         public IEnumerable<Kategori> KategoriDropDownList_GetData()
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                BindList();
+            }
+        
+        }
+        #region Bindlist för Radiobuttonlists och DropDownLists
+        private void BindList()
+        { //TODO try catch
+            rblKategori.DataSource = Service.GetKategories();
+            rblKategori.DataTextField = "Namn";
+            rblKategori.DataValueField = "KaID";
+            rblKategori.DataBind();
+
+            if (rblKategori.SelectedIndex == -1) // -1 är om inget är valt
+            {
+                rblKategori.SelectedIndex = 0; 
+            }
+
+            if (rblStatus.SelectedIndex == -1) 
+            {
+                rblStatus.SelectedIndex = 0; 
+            }
+
+            ddlComposers.DataSource = Service.GetComposers();
+            ddlComposers.DataTextField = "Namn";
+            ddlComposers.DataValueField = "KompID";
+            ddlComposers.DataBind();
+
+            ddlInstruments.SelectedValue = "Piano";
+
+            ddlGenre.SelectedValue = "Klassisk";
+        }
+        #endregion
+
+        public IEnumerable<Material> MaterialListView_GetData()
+        {
+            return Service.GetSongs();
+        }
+
+        public IEnumerable<Kategori> KategoriDropDownList_GetData()
         {
             return Service.GetKategories();
         }
+        //TODO kolla om denna behövs
+        #region KAN BEHÖVAS?  
+        /*  protected void MaterialListView_ItemDataBound(object sender, ListViewItemEventArgs e)
+         {
+             var label = e.Item.FindControl("KategoryNameLabel") as Label;
+             if (label != null)
+             {
+                 // Typomvandlar e.Item.DataItem så att primärnyckelns värde kan hämtas och...
+                 var material = (Material)e.Item.DataItem;
+
+                 // ...som sedan kan användas för att hämta ett ("cachat") kategoriobjekt...
+                 var Kategori = Service.GetKategories()
+                     .Single(ka => ka.KaID == material.KaID);
+
+                 // ...så att en beskrivning av kategori kan presenteras; ex: Kategori:Not
+                 label.Text = String.Format(label.Text, Kategori.Namn);
+             }
+
+             var label2 = e.Item.FindControl("ComposerNameLabel") as Label;
+             if (label2 != null)
+             {
+                 var material2 = (Material)e.Item.DataItem;
+
+                 var Composer = Service.GetComposers()
+                     .Single(co => co.KompID == material2.KompID);
+ 
+                 label2.Text = String.Format(label2.Text, Composer.Namn);
+             }
+         }*/
+        #endregion
+
+        public void MaterialListView_InsertItem(Material material)
+         {
+             if (Page.ModelState.IsValid)
+             {
+                 try
+                 {  // Anger värden från listorna
+                     string kaID = rblKategori.SelectedItem.Value;
+                     string Status= rblStatus.SelectedItem.Value;
+                     string Genre = ddlGenre.SelectedItem.Value;
+                     string KompNamn = ddlComposers.SelectedItem.Value;;
+                     int Level = Convert.ToInt32(ddlLevel.SelectedItem.Value);
+                     string Instrument = ddlInstruments.SelectedItem.Value; ;
+
+                     material.MID = MID;
+                     material.KaID = Convert.ToInt32(kaID);
+                     material.Status = Status;
+                     material.Genre = Genre;
+                     material.Level = Level;
+
+                     Service.SaveSong(material, KompNamn);
+
+                     Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
+                     Response.RedirectToRoute("Details", new { id = MID });
+                     Context.ApplicationInstance.CompleteRequest();
+                 }
+                 catch (Exception)
+                 {
+                     Page.ModelState.AddModelError(String.Empty, Strings.Song_Inserting_Error);
+                 }
+             }
+         }
+
 
     }
 }

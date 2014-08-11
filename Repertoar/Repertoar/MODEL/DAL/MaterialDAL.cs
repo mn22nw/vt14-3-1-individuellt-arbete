@@ -9,6 +9,7 @@ using Repertoar.MODEL;
 using Repertoar.MODEL.DAL;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using Repertoar.App_GlobalResourses;
 
 namespace Repertoar.MODEL.DAL
 {
@@ -20,7 +21,7 @@ namespace Repertoar.MODEL.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("Usp_DeleteSong", conn);
+                    var cmd = new SqlCommand("Repertoar_DeleteSong", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@MID", SqlDbType.Int, 4).Value = MID;
@@ -33,14 +34,14 @@ namespace Repertoar.MODEL.DAL
 
                 catch
                 {
-                    throw new ApplicationException("Det gick inte att ta bort låten från databasen");
+                    throw new ApplicationException(Strings.Song_Deleting_Error);
                 }
             }
         }
 
         public Material GetSongById(int MID)
         {
-            using (var conn = CreateConnection())  // å
+            using (var conn = CreateConnection())  
             {
                 try
                 {
@@ -147,15 +148,14 @@ namespace Repertoar.MODEL.DAL
             }
         }
 
-        public void InsertSong(Material material)
+        public void InsertSong(Material material, string KompNamn)
         {
             using (var conn = CreateConnection())
             {
                 try
                 {
-                    var cmd = new SqlCommand("Usp.NewSong", conn);
+                    var cmd = new SqlCommand("Repertoar_NewSong", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.Add("@KaID", SqlDbType.Int, 4).Value = material.KaID;
                     cmd.Parameters.Add("@KompID", SqlDbType.Int, 4).Value = material.KompID;
                     cmd.Parameters.Add("@Namn", SqlDbType.VarChar, 30).Value = material.Namn;
@@ -163,8 +163,10 @@ namespace Repertoar.MODEL.DAL
                     cmd.Parameters.Add("@Genre", SqlDbType.VarChar, 20).Value = material.Genre;
                     cmd.Parameters.Add("@StatusSong", SqlDbType.VarChar, 15).Value = material.Status;
                     cmd.Parameters.Add("@Intrument", SqlDbType.VarChar, 25).Value = material.Instrument;
-                    cmd.Parameters.Add("@Datum", SqlDbType.SmallDateTime).Value = material.Datum;
+                    cmd.Parameters.AddWithValue("@Datum",DBNull.Value);
                     cmd.Parameters.Add("@Anteckning", SqlDbType.VarChar, 4000).Value = material.Anteckning;
+                    cmd.Parameters.Add("@kompNamn", SqlDbType.VarChar, 60).Value = KompNamn;
+                    
 
                     cmd.Parameters.Add("@MID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
                     conn.Open();  // ska inte vara öppen mer än vad som behövs, därför läggs den in här senare. 
@@ -177,7 +179,7 @@ namespace Repertoar.MODEL.DAL
 
                 catch
                 {
-                    throw new ApplicationException("Det gick inte att lägga till låten i databasen");
+                    throw new ApplicationException(Strings.Song_Inserting_Error);
                 }
             }
         }
@@ -201,15 +203,14 @@ namespace Repertoar.MODEL.DAL
                     cmd.Parameters.Add("@Intrument", SqlDbType.VarChar, 25).Value = material.Instrument;
                     cmd.Parameters.Add("@Datum", SqlDbType.SmallDateTime).Value = material.Datum;
                     cmd.Parameters.Add("@Anteckning", SqlDbType.VarChar, 4000).Value = material.Anteckning;
-                    conn.Open();  // ska inte vara öppen mer än vad som behövs, därför läggs den in här senare. 
+                    conn.Open();  
 
-                    //ExecuteNonQuery används för att exekvera den lp. 
                     cmd.ExecuteNonQuery();
                 }
 
                 catch
                 {
-                    throw new ApplicationException("Det gick inte att uppdatera låten i databasen");
+                    throw new ApplicationException(Strings.Song_Inserting_Error_U);
                 }
             }
         }

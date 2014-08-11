@@ -7,7 +7,7 @@
         ItemType="Repertoar.MODEL.Material"
         DataKeyNames="MID, KaID, KompID"
         SelectMethod="MaterialListView_GetItem"
-        DeleteMethod="ContactListView_DeleteItem"
+        DeleteMethod="MaterialtListView_DeleteItem"
         OnItemDataBound="MaterialListView_ItemDataBound">
         <LayoutTemplate>
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" HeaderText="Följande fel inträffade:"

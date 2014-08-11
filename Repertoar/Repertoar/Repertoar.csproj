@@ -130,7 +130,6 @@
     <Content Include="Pages\Shared\Error.aspx" />
     <Content Include="Pages\Shared\Site.Master" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
-    <Content Include="Pages\RepertoarPages\Delete.aspx" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
@@ -199,13 +198,6 @@
     </Compile>
     <Compile Include="Pages\RepertoarPages\Create.aspx.designer.cs">
       <DependentUpon>Create.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\RepertoarPages\Delete.aspx.cs">
-      <DependentUpon>Delete.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\RepertoarPages\Delete.aspx.designer.cs">
-      <DependentUpon>Delete.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\RepertoarPages\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>

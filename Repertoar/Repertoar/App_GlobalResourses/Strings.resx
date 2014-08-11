@@ -132,6 +132,12 @@
   <data name="Song_Inserting_Error" xml:space="preserve">
     <value>Ett fel inträffade då låten skulle läggas till.</value>
   </data>
+  <data name="Song_Inserting_Error_IU" xml:space="preserve">
+    <value>Ett fel intäffade då låten skulle läggas till/uppdateras.</value>
+  </data>
+  <data name="Song_Inserting_Error_U" xml:space="preserve">
+    <value>Ett fel intäffade då låten skulle läggas uppdateras.</value>
+  </data>
   <data name="Song_Not_Found" xml:space="preserve">
     <value>Låten med nummer {0} hittades inte.</value>
   </data>

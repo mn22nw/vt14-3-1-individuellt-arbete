@@ -1,30 +1,97 @@
 ﻿<%@ Page Title="Create" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Create.aspx.cs" Inherits="Repertoar.Pages.RepertoarPages.Create" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
-     <asp:ListView ID="MateriaListView" runat="server"
-        ItemType="Repertoar.MODEL.Material"
-        DataKeyNames="MID, KaID, KompID"
-        SelectMethod="MaterialListView_GetData"
-        OnItemCreated="MaterialListView_ItemCreated"
-        OnItemDataBound="MaterialListView_ItemDataBound"
-        OnPreRender="MaterialListView_PreRender"
-        InsertItemPosition="LastItem">
-     <InsertItemTemplate>
-            <li>
-                <asp:DropDownList ID="ContactTypeDropDownList" runat="server"
-                    ItemType="Repertoar.MODEL.Kategori"
-                    SelectMethod="KategoriDropDownList_GetData"
-                    DataTextField="Name"
-                    DataValueField="KaID"
-                    SelectedValue='<%# BindItem.KaID %>' />
-                <asp:TextBox ID="ValueTextBox" runat="server" Text='<%# BindItem.Namn %>' MaxLength="50" ValidationGroup="vgContactInsert" />
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="<%$ Resources:Strings, Song_Value_Required %>"
-                    ControlToValidate="ValueTextBox" CssClass="field-validation-error" ValidationGroup="vgContactInsert"
-                    Display="Dynamic">*</asp:RequiredFieldValidator>
+     <h3>Lägg till ny låt</h3>
+      <asp:FormView ID="FormView1" runat="server" 
+            ItemType="Repertoar.MODEL.Material"
+            InsertMethod="MaterialListView_InsertItem"
+            DefaultMode="Insert"
+            RenderOuterTable="false" >
+         <InsertItemTemplate>
+            <div class="editor-label">
+                <label for="Name">Namn</label>
+            </div>
+            <div class="editor-field">
+                <asp:TextBox ID="Name" runat="server" MaxLength="50" Text="<%# BindItem.Namn %>"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
+                    ErrorMessage="Ett förnamn måste anges." ControlToValidate="Name" Display="Dynamic"></asp:RequiredFieldValidator>
+            </div>
+             <br />
+            </InsertItemTemplate>
+        </asp:FormView>
+     
+        <div class="editor-label">
+                <label for="ddlComposers">Kompositör</label>
+        </div>
 
-            </li>
-        </InsertItemTemplate>
-         </asp:ListView>
+      <asp:DropDownList ID="ddlComposers" runat="server"></asp:DropDownList>
+      <br />
+      <br />
+         <label for="ddlInstruments">Instrument</label>
+               <asp:DropDownList ID="ddlInstruments" runat="server" >  
+                      <asp:ListItem Text="Bas" Value="Bas"></asp:ListItem> 
+                      <asp:ListItem Text="Fiol" Value="Fiol"></asp:ListItem>
+                      <asp:ListItem Text="Flöjt" Value="Flöjt"></asp:ListItem>
+                      <asp:ListItem Text="Gitarr" Value="Gitarr"></asp:ListItem>
+                      <asp:ListItem Text="Klarinett" Value="Klarinett"></asp:ListItem>
+                      <asp:ListItem Text="Oboe" Value="Oboe"></asp:ListItem>
+                      <asp:ListItem Text="Piano" Value="Piano"></asp:ListItem>
+                      <asp:ListItem Text="Saxofon" Value="Saxofon"></asp:ListItem>  
+                      <asp:ListItem Text="Trumpet" Value="Trumpet"></asp:ListItem>
+                      <asp:ListItem Text="Trombon" Value="Trombon"></asp:ListItem>  
+                      <asp:ListItem Text="Trummor" Value="Trummor"></asp:ListItem> 
+                      <asp:ListItem Text="Tuba" Value="Tuba"></asp:ListItem>  
+                      <asp:ListItem Text="Valthorn" Value="Valthorn"></asp:ListItem>
+                      </asp:DropDownList>  
+        <br />
+        <br />
+     <div class="editor-label">
+            <label for="rblKategori">Kategori</label>
+      </div>
+    
+      <asp:radiobuttonlist ID="rblKategori" runat="server"></asp:radiobuttonlist>
+        <br />
+        <div class="editor-label">
+           <label for="rblStatus">Status</label>
+           <asp:radiobuttonlist ID="rblStatus" runat="server" RepeatDirection="Horizontal" >  
+                  <asp:ListItem Text="Vill lära mig" Value="Vill lära mig"></asp:ListItem> 
+                  <asp:ListItem Text="Påbörjad" Value="Påbörjad"></asp:ListItem>   
+                  <asp:ListItem Text="Klar" Value="Klar"></asp:ListItem>  
+                  </asp:radiobuttonlist>  
+        </div>
+        <br />
+    <label for="ddlGenre">Genre</label>
+           <asp:DropDownList ID="ddlGenre" runat="server" >  
+                  <asp:ListItem Text="Blues" Value="Blues"></asp:ListItem>
+                  <asp:ListItem Text="Country" Value="Country"></asp:ListItem>
+                  <asp:ListItem Text="Funk" Value="Funk"></asp:ListItem>
+                  <asp:ListItem Text="Gospel" Value="Gospel"></asp:ListItem>
+                  <asp:ListItem Text="Indie-pop" Value="Indie-pop"></asp:ListItem>
+                  <asp:ListItem Text="Jazz" Value="Jazz"></asp:ListItem> 
+                  <asp:ListItem Text="Klassisk" Value="Klassisk"></asp:ListItem>   
+                  <asp:ListItem Text="Metal" Value="Metal"></asp:ListItem>
+                  <asp:ListItem Text="Pop" Value="Pop"></asp:ListItem>
+                  <asp:ListItem Text="Rock" Value="Rock"></asp:ListItem>
+                  <asp:ListItem Text="Övrigt" Value="Övrigt"></asp:ListItem> 
+                  </asp:DropDownList>  
+        <br />
+        <br />
+    <label for="ddlLevel">Svårighetsgrad</label>
+           <asp:DropDownList ID="ddlLevel" runat="server" >  
+                  <asp:ListItem Text="1" Value="1"></asp:ListItem>
+                  <asp:ListItem Text="2" Value="2"></asp:ListItem>
+                  <asp:ListItem Text="3" Value="3"></asp:ListItem>
+                  <asp:ListItem Text="4" Value="4"></asp:ListItem>
+                  <asp:ListItem Text="5" Value="5"></asp:ListItem>
+                  <asp:ListItem Text="6" Value="6"></asp:ListItem> 
+                  <asp:ListItem Text="7" Value="7"></asp:ListItem>   
+                  <asp:ListItem Text="8" Value="8"></asp:ListItem>
+                  <asp:ListItem Text="9" Value="9"></asp:ListItem>
+                  <asp:ListItem Text="10" Value="10"></asp:ListItem>
+                  </asp:DropDownList>  
+        <br />
+        <br />
+        <asp:Button ID="SaveButton" runat="server" Text="Lägg till" CommandName="Insert" CssClass="button"/>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
 </asp:Content>

@@ -106,6 +106,24 @@ namespace Repertoar.App_GlobalResourses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ett fel intäffade då låten skulle läggas till/uppdateras..
+        /// </summary>
+        internal static string Song_Inserting_Error_IU {
+            get {
+                return ResourceManager.GetString("Song_Inserting_Error_IU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ett fel intäffade då låten skulle läggas uppdateras..
+        /// </summary>
+        internal static string Song_Inserting_Error_U {
+            get {
+                return ResourceManager.GetString("Song_Inserting_Error_U", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Låten med nummer {0} hittades inte..
         /// </summary>
         internal static string Song_Not_Found {

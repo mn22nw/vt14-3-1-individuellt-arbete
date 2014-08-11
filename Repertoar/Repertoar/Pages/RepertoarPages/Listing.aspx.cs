@@ -31,7 +31,6 @@ namespace Repertoar.Pages.RepertoarPages
         public IEnumerable<Material> MaterialListView_GetData()
         {
             return Service.GetSongs();
-
         }
 
         // The id parameter name should match the DataKeyNames value set on the control

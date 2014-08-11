@@ -92,8 +92,10 @@
     min-width:110px;
 }
 
-.firstName {
-    width:100%;
+.Name {
+    max-width:90%;
+    width:600px;
+    padding-right:10px;
     text-align:left;
 }
 .lastName {
@@ -111,7 +113,7 @@
     display:inline-block;
     padding:15px;
     background:#e5ecf9;
-    width:70px;
+    min-width:70px;
     margin:10px 0;
     line-height:15px;
     margin-top:15px;

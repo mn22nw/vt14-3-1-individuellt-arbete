@@ -25,11 +25,6 @@ namespace Repertoar.Pages.RepertoarPages
         
         public int MID { get; set; }
 
-         /// <summary>
-         /// Bestämmer om kontaktuppgifterna ska kunna redigeras eller inte.
-         ///</summary>
-
-
         public Material MaterialListView_GetItem([RouteData]int id)
         {
             try
@@ -73,10 +68,6 @@ namespace Repertoar.Pages.RepertoarPages
             }
         }
 
-        
-       
-
-        // The id parameter name should match the DataKeyNames value set on the control
         public void MaterialListView_UpdateItem(int MID)
         {
             try
@@ -91,8 +82,8 @@ namespace Repertoar.Pages.RepertoarPages
                 }
 
                 if (TryUpdateModel(material))
-                {
-                    Service.SaveSong(material);
+                {  //TODO kolla om de behövs
+                    Service.SaveSong(material, "TODO");
 
                     Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
                     Response.RedirectToRoute("SongDetails", new { id = material.MID });
@@ -105,8 +96,7 @@ namespace Repertoar.Pages.RepertoarPages
             }
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
-        public void ContactListView_DeleteItem(int MID)
+        public void MaterialtListView_DeleteItem(int MID)
         {
             try
             {
@@ -120,9 +110,5 @@ namespace Repertoar.Pages.RepertoarPages
                 ModelState.AddModelError(String.Empty, Strings.Song_Deleting_Error);
             }
         }
-
-    
-       
-
     }
 }
