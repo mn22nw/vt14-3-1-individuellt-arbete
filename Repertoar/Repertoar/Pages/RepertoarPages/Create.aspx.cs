@@ -9,11 +9,12 @@ using System.Web;
 using System.Web.ModelBinding;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 
 namespace Repertoar.Pages.RepertoarPages
 {
     public partial class Create : System.Web.UI.Page
-    {    
+    {
         #region Service-objekt
         private Service _service;
         private Service Service
@@ -23,46 +24,33 @@ namespace Repertoar.Pages.RepertoarPages
         #endregion
 
         public int MID { get; set; }
+        public string Composer { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-           // if (!IsPostBack)
-            //{
-                BindList();
-            //}
-        
-        }
-        #region Bindlist för Radiobuttonlists och DropDownLists
-        private void BindList()
-        { //TODO try catch
-            rblKategori.DataSource = Service.GetKategories();
-            rblKategori.DataTextField = "Namn";
-            rblKategori.DataValueField = "KaID";
-           // rblKategori.AppendDataBoundItems = true;
-            rblKategori.DataBind();
-            
-            rblKategori.SelectedIndex = 0;
-            if (rblKategori.SelectedIndex == -1) // -1 är om inget är valt
+
+            if (!IsPostBack)
             {
-                rblKategori.SelectedIndex = 0; 
+                // BindList();
             }
-
-            if (rblStatus.SelectedIndex == -1) 
-            {
-                rblStatus.SelectedIndex = 0; 
-            }
-
-            ddlComposers.DataSource = Service.GetComposers();
-            ddlComposers.DataTextField = "Namn";
-            ddlComposers.DataValueField = "KompID";
-            ddlComposers.DataBind();
-
-            ddlInstruments.SelectedValue = "Piano";
-
-            ddlGenre.SelectedValue = "Klassisk";
         }
-        #endregion
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            generateDynamicControls();
+        }
+
+
+        protected void MaterialListView_InsertItem(object sender, EventArgs e)
+        {
+            DropDownList ddl = (DropDownList)PlaceHolder1.FindControl("DropDownList");
+
+            Material materialInsert = new Material();
+            materialInsert.KompID = Convert.ToInt32(ddl.SelectedValue);
+            // SaveSong(Material material, string KompNamn)
+        }
+
 
         public IEnumerable<Material> MaterialListView_GetData()
         {
@@ -73,80 +61,100 @@ namespace Repertoar.Pages.RepertoarPages
         {
             return Service.GetKategories();
         }
-        //TODO kolla om denna behövs
-        #region KAN BEHÖVAS?  
-        /*  protected void MaterialListView_ItemDataBound(object sender, ListViewItemEventArgs e)
-         {
-             var label = e.Item.FindControl("KategoryNameLabel") as Label;
-             if (label != null)
-             {
-                 // Typomvandlar e.Item.DataItem så att primärnyckelns värde kan hämtas och...
-                 var material = (Material)e.Item.DataItem;
 
-                 // ...som sedan kan användas för att hämta ett ("cachat") kategoriobjekt...
-                 var Kategori = Service.GetKategories()
-                     .Single(ka => ka.KaID == material.KaID);
 
-                 // ...så att en beskrivning av kategori kan presenteras; ex: Kategori:Not
-                 label.Text = String.Format(label.Text, Kategori.Namn);
-             }
 
-             var label2 = e.Item.FindControl("ComposerNameLabel") as Label;
-             if (label2 != null)
-             {
-                 var material2 = (Material)e.Item.DataItem;
 
-                 var Composer = Service.GetComposers()
-                     .Single(co => co.KompID == material2.KompID);
- 
-                 label2.Text = String.Format(label2.Text, Composer.Namn);
-             }
-         }*/
+        protected void ddlComposers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //när index ändras ska det skickas somehow till insertitem...
+            //  Debug.WriteLine(Composer + " indexch");
+            //Composer = ddlComposers.SelectedValue;
+
+        }
+
+        protected void rblKategori_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //kod här
+        }
+
+        #region databind
+        /*   protected void ListView1_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
+           {
+               DropDownList DropDownList1 = ListView1.FindControl("ddlComposers") as DropDownList;
+               //save ddl index to viewstate.
+               ViewState["ddlindex"] = DropDownList1.SelectedIndex;
+               ListView1.DataBind();
+
+           }
+
+         /*  protected void DetailsView1_DataBound(object sender, EventArgs e)
+           {
+            
+                   DropDownList DropDownList1 = ListView1.FindControl("DropDownList1") as DropDownList;
+                   DropDownList1.DataSource = Service.GetComposers();
+                   DropDownList1.DataTextField = "Name";
+                   DropDownList1.DataValueField = "KompID";
+                   DropDownList1.DataBind();
+                   //when you first load detailsview,the viewstate["ddlindex"] is null,when you insert item to detailsview,
+                   //rebind your it,it will fire the databound event again.
+                   if (ViewState["ddlindex"] != null)
+                   {
+                       DropDownList1.SelectedIndex = (int)ViewState["ddlindex"];
+                   }
+
+               }*/
         #endregion
 
-        public void MaterialListView_InsertItem(object sender, EventArgs e)
-        { 
-             if (Page.ModelState.IsValid)
-             {  
-                 Material material = new Material();
-                
-                 
-               //  try
-               //  {  // Anger värden från listorna
-                     string Namn = Name.Text;
-                     string kaID = rblKategori.SelectedValue;
-                     Debug.WriteLine(kaID +"KaID");
-                     string Status= rblStatus.SelectedItem.Value;
-                     Debug.WriteLine(Status);
-                     string Genre = ddlGenre.SelectedItem.Value;
-                     Debug.WriteLine(Genre);
-                     string KompNamn = ddlComposers.SelectedItem.Value;
-                     Debug.WriteLine(KompNamn);
-                     int Level = Convert.ToInt32(ddlLevel.SelectedItem.Value);
-                     Debug.WriteLine(Level);
-                     string Instrument = ddlInstruments.SelectedItem.Value; ;
-                    
-                     material.MID = 0;
-                     material.KaID = Convert.ToInt32(kaID);
-                     material.Status = Status;
-                     material.Namn = Namn;
-                     material.Genre = Genre;
-                     material.Level = Level;
-                     material.Instrument = Instrument;
-                     
-                     Service.SaveSong(material, KompNamn);
-                     Debug.WriteLine("intehiti!");
-                     Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
-                     Response.RedirectToRoute("Default");
-                     Context.ApplicationInstance.CompleteRequest();
-                /* }
-                 catch (Exception)
-                 {
-                     Page.ModelState.AddModelError(String.Empty, Strings.Song_Inserting_Error);
-                 }*/
-             }
-         }
+        #region Dynamic Methods
 
+        public void generateDynamicControls()
+        {
 
+            // lblValue.Text = string.Empty;
+
+            ViewState["control"] = "dropdownlist";
+            createDynamicDropDownList("DropDownList");
+
+            // ViewState["control"] = "radiobuttonlist";
+            //  createDynamicRadioButtonList("RadioButtonList");
+
+        }
+
+        public void createDynamicDropDownList(string _ddlId)
+        {
+            HtmlGenericControl tr = new HtmlGenericControl("tr");
+            HtmlGenericControl td1 = new HtmlGenericControl("td");
+
+            Label lbl = new Label();
+            lbl.ID = "ddl" + _ddlId.Replace(" ", "").ToLower();
+            lbl.Text = _ddlId;
+            td1.Controls.Add(lbl);
+            tr.Controls.Add(td1);
+
+            HtmlGenericControl td2 = new HtmlGenericControl("td");
+            DropDownList ddl = new DropDownList();
+            ddl.ID = _ddlId.Replace(" ", "").ToLower();
+            ddl.SelectedIndexChanged += ddl_SelectedIndexChanged;
+            ddl.AutoPostBack = true;
+            ddl.Items.Add(new ListItem("-- Select --", "-- Select --"));
+            ddl.DataSource = Service.GetComposers();
+            ddl.DataTextField = "Namn";
+            ddl.DataValueField = "KompID";
+            ddl.DataBind();
+            td2.Controls.Add(ddl);
+            tr.Controls.Add(td2);
+            PlaceHolder1.Controls.Add(tr);
+        }
+
+        public void ddl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var ddl = (DropDownList)sender;
+            if (ddl.SelectedIndex > 0)
+            {
+                lblValue.Text = ddl.SelectedValue;
+            }
+        }
+        #endregion
     }
 }

@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Create" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Create.aspx.cs" Inherits="Repertoar.Pages.RepertoarPages.Create" ViewStateMode="Enabled" %>
-
+﻿<%@ Page Title="Create" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="Create2.aspx.cs" Inherits="Repertoar.Pages.RepertoarPages.Create" ViewStateMode="Enabled" %>
+<%@ Register Assembly="Repertoar"  TagName="CustomLabelControl" TagPrefix="aspNewControls" Namespace="NewControls"%>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
      <h3>Lägg till ny låt</h3>
     
@@ -16,17 +16,8 @@
         <div class="editor-label">
                 <label for="ddlComposers">Kompositör</label>
         </div>
-
-     <div>
-        <asp:Table ID="tbl" runat="server">
-        </asp:Table>
-   
-         <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
-         <asp:Label ID="lblValue" runat="server" Text="" Style="color: Red;"></asp:Label>
-         </div>
-   
-
-
+    <aspNewControls:NewDropDownList ID="ddlComposers" runat="server"DataTextField = "Namn" DataValueField = "KompID">
+                                                </aspNewControls:NewDropDownList>
       <br />
       <br />
          <label for="ddlInstruments">Instrument</label>
@@ -51,7 +42,7 @@
             <label for="rblKategori">Kategori</label>
       </div>
     
-      <asp:radiobuttonlist ID="rblKategori" runat="server" EnableViewState="false" AutoPostBack = "true"></asp:radiobuttonlist>
+      <asp:radiobuttonlist ID="rblKategori" runat="server" DataTextField = "Namn" DataValueField = "KaID" ></asp:radiobuttonlist>
         <br />
         <div class="editor-label">
            <label for="rblStatus">Status</label>
@@ -93,7 +84,8 @@
                   </asp:DropDownList>  
         <br />
         <br />
-    
+        <label for="Anteckningar">Anteckningar</label>
+        <asp:TextBox ID="Anteckningar" runat="server" TextMode="MultiLine"></asp:TextBox>
         <asp:Button ID="SaveButton" runat="server" Text="Lägg till" OnClick="MaterialListView_InsertItem" CssClass="button"/>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">

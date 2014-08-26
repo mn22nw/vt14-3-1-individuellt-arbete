@@ -31,33 +31,6 @@ namespace Repertoar.Pages.RepertoarPages {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
-        /// tbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tbl;
-        
-        /// <summary>
-        /// PlaceHolder1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder1;
-        
-        /// <summary>
-        /// lblValue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblValue;
-        
-        /// <summary>
         /// ddlInstruments control.
         /// </summary>
         /// <remarks>
@@ -101,6 +74,15 @@ namespace Repertoar.Pages.RepertoarPages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlLevel;
+        
+        /// <summary>
+        /// Anteckningar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Anteckningar;
         
         /// <summary>
         /// SaveButton control.
