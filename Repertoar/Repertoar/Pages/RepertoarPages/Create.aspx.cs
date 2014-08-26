@@ -24,7 +24,8 @@ namespace Repertoar.Pages.RepertoarPages
         #endregion
 
         public int MID { get; set; }
-        public string Composer { get; set; }
+        public int KaID { get; set; }
+        public int KompID { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,10 +45,15 @@ namespace Repertoar.Pages.RepertoarPages
 
         protected void MaterialListView_InsertItem(object sender, EventArgs e)
         {
-            DropDownList ddl = (DropDownList)PlaceHolder1.FindControl("DropDownList");
+            
 
             Material materialInsert = new Material();
-            materialInsert.KompID = Convert.ToInt32(ddl.SelectedValue);
+            materialInsert.KompID = KompID;
+            Debug.WriteLine(KompID);
+
+            materialInsert.KaID = KaID;
+            Debug.WriteLine("KaID = " + KaID);
+
             // SaveSong(Material material, string KompNamn)
         }
 
@@ -114,37 +120,58 @@ namespace Repertoar.Pages.RepertoarPages
             // lblValue.Text = string.Empty;
 
             ViewState["control"] = "dropdownlist";
-            createDynamicDropDownList("DropDownList");
+            createDynamicDropDownListComposer();
+            createDynamicRadioButtonListCategory();
 
             // ViewState["control"] = "radiobuttonlist";
             //  createDynamicRadioButtonList("RadioButtonList");
 
         }
 
-        public void createDynamicDropDownList(string _ddlId)
+        public void createDynamicDropDownListComposer()
         {
+            string _ddlId = "ddlComposer";
             HtmlGenericControl tr = new HtmlGenericControl("tr");
             HtmlGenericControl td1 = new HtmlGenericControl("td");
 
-            Label lbl = new Label();
-            lbl.ID = "ddl" + _ddlId.Replace(" ", "").ToLower();
-            lbl.Text = _ddlId;
-            td1.Controls.Add(lbl);
-            tr.Controls.Add(td1);
-
-            HtmlGenericControl td2 = new HtmlGenericControl("td");
             DropDownList ddl = new DropDownList();
             ddl.ID = _ddlId.Replace(" ", "").ToLower();
             ddl.SelectedIndexChanged += ddl_SelectedIndexChanged;
             ddl.AutoPostBack = true;
-            ddl.Items.Add(new ListItem("-- Select --", "-- Select --"));
             ddl.DataSource = Service.GetComposers();
             ddl.DataTextField = "Namn";
             ddl.DataValueField = "KompID";
             ddl.DataBind();
-            td2.Controls.Add(ddl);
-            tr.Controls.Add(td2);
+            ddl.Items.Insert(0, new ListItem("-- Välj Kompositör --", string.Empty));
+            td1.Controls.Add(ddl);
+            tr.Controls.Add(td1);
             PlaceHolder1.Controls.Add(tr);
+        }
+
+        public void createDynamicRadioButtonListCategory()
+        {
+            string _RadioButtonListID = "rblComposer";
+            HtmlGenericControl tr = new HtmlGenericControl("tr");
+            HtmlGenericControl td1 = new HtmlGenericControl("td");
+
+            Label lbl = new Label();
+            lbl.ID = "lbl" + _RadioButtonListID.Replace(" ", "").ToLower();
+            lbl.Text = _RadioButtonListID;
+            td1.Controls.Add(lbl);
+            tr.Controls.Add(td1);
+
+            HtmlGenericControl td2 = new HtmlGenericControl("td");
+            RadioButtonList RadioButtonList = new RadioButtonList();
+            RadioButtonList.ID = _RadioButtonListID.Replace(" ", "").ToLower();
+            RadioButtonList.SelectedIndexChanged += rbl_SelectedIndexChanged;
+            RadioButtonList.DataSource = Service.GetKategories();
+            RadioButtonList.DataTextField = "Namn";
+            RadioButtonList.DataValueField = "KaID";
+            RadioButtonList.DataBind();
+            RadioButtonList.SelectedValue = "Not";
+            td2.Controls.Add(RadioButtonList);
+            tr.Controls.Add(td2);
+            PlaceHolder2.Controls.Add(tr);
         }
 
         public void ddl_SelectedIndexChanged(object sender, EventArgs e)
@@ -152,9 +179,16 @@ namespace Repertoar.Pages.RepertoarPages
             var ddl = (DropDownList)sender;
             if (ddl.SelectedIndex > 0)
             {
-                lblValue.Text = ddl.SelectedValue;
+                KompID = Convert.ToInt32(ddl.SelectedItem.Value);
             }
         }
+
+        public void rbl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rbl = (RadioButtonList)sender;
+            KaID = Convert.ToInt32(rbl.SelectedItem.Value);
+            
+        } 
         #endregion
     }
 }

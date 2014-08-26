@@ -20,9 +20,11 @@
      <div>
         <asp:Table ID="tbl" runat="server">
         </asp:Table>
-   
-         <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
-         <asp:Label ID="lblValue" runat="server" Text="" Style="color: Red;"></asp:Label>
+    
+         <div class="editor-label">
+           <label for="PlaceHolder1">Kompositör</label>
+           <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
+     </div>
          </div>
    
 
@@ -47,12 +49,12 @@
                       </asp:DropDownList>  
         <br />
         <br />
-     <div class="editor-label">
-            <label for="rblKategori">Kategori</label>
-      </div>
-    
-      <asp:radiobuttonlist ID="rblKategori" runat="server" EnableViewState="false" AutoPostBack = "true"></asp:radiobuttonlist>
+    <div class="editor-label">
+           <label for="PlaceHolder2">Kategori</label>
+            <asp:PlaceHolder ID="PlaceHolder2" runat="server"></asp:PlaceHolder>
+    </div>
         <br />
+        
         <div class="editor-label">
            <label for="rblStatus">Status</label>
            <asp:radiobuttonlist ID="rblStatus" runat="server" RepeatDirection="Horizontal" >  
