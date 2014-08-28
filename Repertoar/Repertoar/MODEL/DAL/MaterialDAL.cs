@@ -148,14 +148,13 @@ namespace Repertoar.MODEL.DAL
             }
         }
 
-        public void InsertSong(Material material, string KompNamn)
+        public int InsertSong(Material material, string KompNamn)
         {
             using (var conn = CreateConnection())
             {
                 //TODO try catch
               /*  try
                 {*/
-                Debug.WriteLine("kommerhiti??!! ");
                     var cmd = new SqlCommand("Repertoar_NewSong", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                    
@@ -177,7 +176,10 @@ namespace Repertoar.MODEL.DAL
                     //ExecuteNonQuery används för att exekvera den lp. 
                     cmd.ExecuteNonQuery();
 
-                    material.MID = (int)cmd.Parameters["@MID"].Value;
+                    
+                    int MID = (int)cmd.ExecuteScalar();
+
+                    return MID;
                /* }
 
                 catch

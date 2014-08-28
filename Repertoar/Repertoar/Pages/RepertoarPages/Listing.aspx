@@ -9,7 +9,7 @@
                 <asp:Literal runat="server" ID="SuccessMessageLiteral" />
             <asp:Button ID="Button1" CssClass="exit" runat="server" Text="Stäng" OnClientClick="exitbutton_OnClick" />
             </asp:Panel>
-        <asp:HyperLink ID="HyperLink1"  runat="server" Text="Ny Kund" NavigateUrl="<%$ RouteUrl:routename=CreateSong %>" CssClass="nyKund right" />
+        <asp:HyperLink ID="HyperLink1"  runat="server" Text="Skapa Ny Låt" NavigateUrl="<%$ RouteUrl:routename=CreateSong %>" CssClass="button right" />
 
      <asp:ListView ID="ContactListView" runat="server" 
             ItemType="Repertoar.MODEL.Material"

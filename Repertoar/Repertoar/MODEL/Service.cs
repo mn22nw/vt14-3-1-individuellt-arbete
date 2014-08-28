@@ -41,8 +41,9 @@ namespace Repertoar.MODEL
         #endregion
 
         #region Material CRUD-metoder
-        public void SaveSong(Material material, string KompNamn)
-        {
+        public int SaveSong(Material material, string KompNamn)
+        {   
+            int MID;
             /*  ICollection<ValidationResult> validationResults;
 
              //TODO find solution for datetime validaion + Try catch
@@ -60,11 +61,15 @@ namespace Repertoar.MODEL
                 if (material.MID == 0) // Ny post om MID är 0!
                 {
                     Debug.WriteLine("kommerhiti??!! sevice");
-                    MaterialDAL.InsertSong(material, KompNamn);
+                   MID =  MaterialDAL.InsertSong(material, KompNamn);
+                   return MID;
+                    
                 }
-                else
+                else //TODO - fix update!
                 {
-                    MaterialDAL.UpdateSong(material);
+                   // MID = MaterialDAL.UpdateSong(material);
+                    //return MID;
+                    return 1;
                 }
 
              /*  }

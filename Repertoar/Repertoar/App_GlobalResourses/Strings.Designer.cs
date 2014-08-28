@@ -61,6 +61,15 @@ namespace Repertoar.App_GlobalResourses {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to En kompositör måste väljas. .
+        /// </summary>
+        internal static string Action_Required {
+            get {
+                return ResourceManager.GetString("Action_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Låten togs bort..
         /// </summary>
         internal static string Action_Song_Deleted {

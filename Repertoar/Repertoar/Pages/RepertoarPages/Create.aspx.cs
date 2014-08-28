@@ -45,16 +45,36 @@ namespace Repertoar.Pages.RepertoarPages
 
         protected void MaterialListView_InsertItem(object sender, EventArgs e)
         {
-            
-
+           
+            // Creates new material and sets the values for each field. //
             Material materialInsert = new Material();
+            if (KompID == 0)
+            {
+                Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
+            }
+
             materialInsert.KompID = KompID;
-            Debug.WriteLine(KompID);
-
             materialInsert.KaID = KaID;
-            Debug.WriteLine("KaID = " + KaID);
+            materialInsert.Namn = Name.Text;
+            materialInsert.Level = Convert.ToInt32(ddlLevel.SelectedItem.Value);
+            materialInsert.Genre = ddlGenre.SelectedItem.Value;
+            materialInsert.Status = rblStatus.SelectedItem.Value;
+            materialInsert.Instrument = ddlInstruments.SelectedItem.Value;
+            materialInsert.Anteckning = TextBox2.Text;
 
-            // SaveSong(Material material, string KompNamn)
+            string KompNamn = "Kompnamn";
+            Debug.WriteLine(KompID);
+            Debug.WriteLine("KaID = " + KaID);
+            Debug.WriteLine("namn= " + materialInsert.Namn);
+            Debug.WriteLine("level = " + materialInsert.Level);
+            Debug.WriteLine("genre = " + materialInsert.Genre);
+            Debug.WriteLine(" Status = "+ materialInsert.Status);
+            Debug.WriteLine("anteckning " + materialInsert.Anteckning);
+            materialInsert.MID = Service.SaveSong(materialInsert, KompNamn);
+            
+            Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
+            Response.RedirectToRoute("Details", new { id = materialInsert.MID });
+            Context.ApplicationInstance.CompleteRequest();
         }
 
 
@@ -123,8 +143,6 @@ namespace Repertoar.Pages.RepertoarPages
             createDynamicDropDownListComposer();
             createDynamicRadioButtonListCategory();
 
-            // ViewState["control"] = "radiobuttonlist";
-            //  createDynamicRadioButtonList("RadioButtonList");
 
         }
 
@@ -143,23 +161,17 @@ namespace Repertoar.Pages.RepertoarPages
             ddl.DataValueField = "KompID";
             ddl.DataBind();
             ddl.Items.Insert(0, new ListItem("-- Välj Kompositör --", string.Empty));
+            ddl.SelectedIndex = 0;
             td1.Controls.Add(ddl);
             tr.Controls.Add(td1);
             PlaceHolder1.Controls.Add(tr);
+            KompID = 0;
         }
 
         public void createDynamicRadioButtonListCategory()
         {
             string _RadioButtonListID = "rblComposer";
             HtmlGenericControl tr = new HtmlGenericControl("tr");
-            HtmlGenericControl td1 = new HtmlGenericControl("td");
-
-            Label lbl = new Label();
-            lbl.ID = "lbl" + _RadioButtonListID.Replace(" ", "").ToLower();
-            lbl.Text = _RadioButtonListID;
-            td1.Controls.Add(lbl);
-            tr.Controls.Add(td1);
-
             HtmlGenericControl td2 = new HtmlGenericControl("td");
             RadioButtonList RadioButtonList = new RadioButtonList();
             RadioButtonList.ID = _RadioButtonListID.Replace(" ", "").ToLower();
@@ -168,10 +180,11 @@ namespace Repertoar.Pages.RepertoarPages
             RadioButtonList.DataTextField = "Namn";
             RadioButtonList.DataValueField = "KaID";
             RadioButtonList.DataBind();
-            RadioButtonList.SelectedValue = "Not";
+            RadioButtonList.SelectedIndex = 0;
             td2.Controls.Add(RadioButtonList);
             tr.Controls.Add(td2);
             PlaceHolder2.Controls.Add(tr);
+            KaID = 1;
         }
 
         public void ddl_SelectedIndexChanged(object sender, EventArgs e)
