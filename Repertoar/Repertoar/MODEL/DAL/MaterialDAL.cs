@@ -174,7 +174,7 @@ namespace Repertoar.MODEL.DAL
                     conn.Open();  // ska inte vara öppen mer än vad som behövs, därför läggs den in här senare. 
 
                     //ExecuteNonQuery används för att exekvera den lp. 
-                    cmd.ExecuteNonQuery();
+                   // cmd.ExecuteNonQuery();
 
                     
                     int MID = (int)cmd.ExecuteScalar();

@@ -60,7 +60,7 @@ namespace Repertoar.MODEL
             {*/
                 if (material.MID == 0) // Ny post om MID är 0!
                 {
-                    Debug.WriteLine("kommerhiti??!! sevice");
+                  
                    MID =  MaterialDAL.InsertSong(material, KompNamn);
                    return MID;
                     

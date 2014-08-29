@@ -29,11 +29,6 @@ namespace Repertoar.Pages.RepertoarPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!IsPostBack)
-            {
-                // BindList();
-            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -45,36 +40,39 @@ namespace Repertoar.Pages.RepertoarPages
 
         protected void MaterialListView_InsertItem(object sender, EventArgs e)
         {
-           
             // Creates new material and sets the values for each field. //
             Material materialInsert = new Material();
+           
             if (KompID == 0)
             {
-                Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
+                SuccessMessagePanel.Visible = true;
+                SuccessMessageLiteral.Text = "En kompositör måste väjas";
             }
 
-            materialInsert.KompID = KompID;
-            materialInsert.KaID = KaID;
-            materialInsert.Namn = Name.Text;
-            materialInsert.Level = Convert.ToInt32(ddlLevel.SelectedItem.Value);
-            materialInsert.Genre = ddlGenre.SelectedItem.Value;
-            materialInsert.Status = rblStatus.SelectedItem.Value;
-            materialInsert.Instrument = ddlInstruments.SelectedItem.Value;
-            materialInsert.Anteckning = TextBox2.Text;
+            if (KompID > 0)
+            {
+                materialInsert.KompID = KompID;
+                materialInsert.KaID = KaID;
+                materialInsert.Namn = Name.Text;
+                materialInsert.Level = Convert.ToInt32(ddlLevel.SelectedItem.Value);
+                materialInsert.Genre = ddlGenre.SelectedItem.Value;
+                materialInsert.Status = rblStatus.SelectedItem.Value;
+                materialInsert.Instrument = ddlInstruments.SelectedItem.Value;
+                materialInsert.Anteckning = TextBox2.Text;
+               
+                if (String.IsNullOrWhiteSpace(TextBox2.Text))
+                {
+                    materialInsert.Anteckning = "Klicka på redigera för att lägga till en anteckning. ";
+                }
 
-            string KompNamn = "Kompnamn";
-            Debug.WriteLine(KompID);
-            Debug.WriteLine("KaID = " + KaID);
-            Debug.WriteLine("namn= " + materialInsert.Namn);
-            Debug.WriteLine("level = " + materialInsert.Level);
-            Debug.WriteLine("genre = " + materialInsert.Genre);
-            Debug.WriteLine(" Status = "+ materialInsert.Status);
-            Debug.WriteLine("anteckning " + materialInsert.Anteckning);
-            materialInsert.MID = Service.SaveSong(materialInsert, KompNamn);
-            
-            Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
-            Response.RedirectToRoute("Details", new { id = materialInsert.MID });
-            Context.ApplicationInstance.CompleteRequest();
+                string KompNamn = "Kompnamn";
+                
+                materialInsert.MID = Service.SaveSong(materialInsert, KompNamn);
+
+                Page.SetTempData("SuccessMessage", Strings.Action_Song_Saved);
+                Response.RedirectToRoute("Details", new { id = materialInsert.MID });
+                Context.ApplicationInstance.CompleteRequest();
+            }
         }
 
 
@@ -104,33 +102,11 @@ namespace Repertoar.Pages.RepertoarPages
             //kod här
         }
 
-        #region databind
-        /*   protected void ListView1_ItemInserted(object sender, DetailsViewInsertedEventArgs e)
-           {
-               DropDownList DropDownList1 = ListView1.FindControl("ddlComposers") as DropDownList;
-               //save ddl index to viewstate.
-               ViewState["ddlindex"] = DropDownList1.SelectedIndex;
-               ListView1.DataBind();
 
-           }
-
-         /*  protected void DetailsView1_DataBound(object sender, EventArgs e)
-           {
-            
-                   DropDownList DropDownList1 = ListView1.FindControl("DropDownList1") as DropDownList;
-                   DropDownList1.DataSource = Service.GetComposers();
-                   DropDownList1.DataTextField = "Name";
-                   DropDownList1.DataValueField = "KompID";
-                   DropDownList1.DataBind();
-                   //when you first load detailsview,the viewstate["ddlindex"] is null,when you insert item to detailsview,
-                   //rebind your it,it will fire the databound event again.
-                   if (ViewState["ddlindex"] != null)
-                   {
-                       DropDownList1.SelectedIndex = (int)ViewState["ddlindex"];
-                   }
-
-               }*/
-        #endregion
+        protected void exitbutton_OnClick(object sender, EventArgs e)
+        {
+            SuccessMessagePanel.Visible = false;
+        }
 
         #region Dynamic Methods
 

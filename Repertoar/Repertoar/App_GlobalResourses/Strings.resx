@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_Required" xml:space="preserve">
-    <value>En kompositör måste väljas. </value>
+  <data name="Action_Composer_Required" xml:space="preserve">
+    <value>En kompositör måste väjas</value>
   </data>
   <data name="Action_Song_Deleted" xml:space="preserve">
     <value>Låten togs bort.</value>
@@ -152,6 +152,9 @@
   </data>
   <data name="Song_Value_Required" xml:space="preserve">
     <value>Låtnamn måste anges.</value>
+  </data>
+  <data name="stringa" xml:space="preserve">
+    <value>sds</value>
   </data>
   <data name="Validation_Header" xml:space="preserve">
     <value>Fel inträffade. Korrigera det som är fel och försök igen.</value>
